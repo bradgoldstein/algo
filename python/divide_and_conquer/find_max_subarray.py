@@ -7,7 +7,7 @@
 #
 
 # Args:
-#	A: A list of comparable values
+#	A: a list of comparable values
 #	low: first index in A
 #	mid: mid index in A
 #	high: last index in A
@@ -44,7 +44,7 @@ def findMaxCrossingSubarray(A, low, mid, high):
 	return (max_left, max_right, left_sum + right_sum)
 
 # Args:
-#	A: A list of comparable values
+#	A: a list of comparable values
 #	low: first index in A
 #	high: last index in A
 # Returns:
@@ -57,11 +57,17 @@ def findMaxSubarrayHelper(A, low, high):
 		return (low, high, A[low])
 
 	mid = (low + high) / 2
+
+	# Recursively find max-subarray of the left side.
 	left_low, left_high, left_sum = findMaxSubarrayHelper(A, low, mid)
+	# Recursively find max-subarray of the right side.
 	right_low, right_high, right_sum = findMaxSubarrayHelper(A, mid + 1, high)
+	# Find max-subarray that crosses the middle.
 	cross_low, cross_high, cross_sum = findMaxCrossingSubarray(
 		A, low, mid, high)
 
+	# Find which max subarray (left, right or middle) is the highest,
+	# and return that value.
 	max_sum = max(left_sum, right_sum, cross_sum)
 	if max_sum == left_sum:
 		return (left_low, left_high, left_sum)
@@ -70,8 +76,16 @@ def findMaxSubarrayHelper(A, low, high):
 	if max_sum	== cross_sum:
 		return (cross_low, cross_high, cross_sum)
 
-	raise ValueError
+	raise ValueError  # should never reach here.
 
+# Args:
+#	A: a list of comparable values
+# Returns:
+#	A tuple containing the indices of the greatest subarray,
+#	and the sum of the values in that array:
+# 		(left, right, sum) where,
+# 	left <= right.
 def findMaxSubarray(A):
+	# Initial call to findMaxSubarrayHelper with indices of the entire array.
 	return findMaxSubarrayHelper(A, 0, len(A) - 1)
 
