@@ -1,10 +1,10 @@
 
-#
 # Algorithm to find the subarray with the greatest sum of any contiguous
 # subarray in array A.
 #
 # See 70-74 in CLRS 3rd ed.
 #
+# Author: Bradley Goldstein
 
 # Args:
 #	A: a list of comparable values
