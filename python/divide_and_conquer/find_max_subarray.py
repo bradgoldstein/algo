@@ -1,8 +1,8 @@
 
 # Algorithm to find the subarray with the greatest sum of any contiguous
-# subarray in array A.
+# subarray in array A: 'The maximum-subarray problem'.
 #
-# See 70-74 in CLRS 3rd ed.
+# See p.70-74 in CLRS 3rd ed.
 #
 # Author: Bradley Goldstein
 

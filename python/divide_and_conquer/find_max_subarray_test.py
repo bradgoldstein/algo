@@ -1,11 +1,13 @@
 
 # Tests for find_max_subarray.py
+#
+# Author: Bradley Goldstein
 
 import find_max_subarray as fmcs
 
 import unittest
 
-# Example from CLRS 70 3rd ed.
+# Example from CLRS p.70 3rd ed.
 CLRS_EXAMPLE = [13, -3, -25, 20, -3, -16, -23, 18,
                 20, -7, 12, -5, -22, 15, -4, 7]
 
