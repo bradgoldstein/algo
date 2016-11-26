@@ -6,6 +6,8 @@
 # Author: Bradley Goldstein
 
 
+# Sorts the list inplace.
+#
 # Args:
 #	A: list of values to be sorted
 def insertionSort(A):
