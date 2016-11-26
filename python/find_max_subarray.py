@@ -17,7 +17,7 @@
 # 		(left, right, sum) where,
 # 	low <= left <= mid and
 #	mid <= right <= high.
-def findMaxCrossingSubarray(A, low, mid, high):
+def _findMaxCrossingSubarray(A, low, mid, high):
 	assert len(A) > 1, 'Array A must have > 2 elements but has %d.' % len(A)
 	assert 0 <= low <= mid <= high <= len(A), 'Array indices are out of order.'
 
@@ -52,18 +52,18 @@ def findMaxCrossingSubarray(A, low, mid, high):
 #	and the sum of the values in that array:
 # 		(left, right, sum) where,
 # 	left <= right.
-def findMaxSubarrayHelper(A, low, high):
+def _findMaxSubarrayHelper(A, low, high):
 	if low == high:  # base case
 		return (low, high, A[low])
 
 	mid = (low + high) / 2
 
 	# Recursively find max-subarray of the left side.
-	left_low, left_high, left_sum = findMaxSubarrayHelper(A, low, mid)
+	left_low, left_high, left_sum = _findMaxSubarrayHelper(A, low, mid)
 	# Recursively find max-subarray of the right side.
-	right_low, right_high, right_sum = findMaxSubarrayHelper(A, mid + 1, high)
+	right_low, right_high, right_sum = _findMaxSubarrayHelper(A, mid + 1, high)
 	# Find max-subarray that crosses the middle.
-	cross_low, cross_high, cross_sum = findMaxCrossingSubarray(
+	cross_low, cross_high, cross_sum = _findMaxCrossingSubarray(
 		A, low, mid, high)
 
 	# Find which max subarray (left, right or middle) is the highest,
@@ -86,6 +86,6 @@ def findMaxSubarrayHelper(A, low, high):
 # 		(left, right, sum) where,
 # 	left <= right.
 def findMaxSubarray(A):
-	# Initial call to findMaxSubarrayHelper with indices of the entire array.
-	return findMaxSubarrayHelper(A, 0, len(A) - 1)
+	# Initial call to _findMaxSubarrayHelper with indices of the entire array.
+	return _findMaxSubarrayHelper(A, 0, len(A) - 1)
 
