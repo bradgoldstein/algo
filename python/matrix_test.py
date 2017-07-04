@@ -6,8 +6,6 @@ import matrix
 
 import unittest
 
-import numpy as np
-
 
 class TestMatrix(unittest.TestCase):
   def testTruthiness_emptyMatrix_returnsCorrectValues(self):
@@ -114,14 +112,13 @@ class TestMatrix(unittest.TestCase):
     m[2][2] = 'a'
     self.assertNotEqual(m[2][2], n[2][2])
 
-  def testMultiplication_normalArguments_doesProperMultiplication(self):
+  def testMultiplication_normalArguments_returnsCorrectResult(self):
     m1 = matrix.Matrix.fromRows([[1, 2],
                                  [-3, 0]])
     m2 = matrix.Matrix.fromRows([[1, 3, -1],
                                  [2, 0, 4]])
 
-    self.assertEqual((m1*m2).matrix_, [[ 5,  3, 7],
-                                       [-3, -9, 3]])
+    self.assertCorrectMatrixMultiply(m1, m2)
 
   def testMultiplication_mismatchedRowsAndColumns_raisesValueError(self):
     m1 = matrix.Matrix.fromRows([[1, 2],
@@ -131,6 +128,55 @@ class TestMatrix(unittest.TestCase):
                                  [3, 4]])
 
     self.assertRaises(ValueError, m1.__mul__, m2)
+
+  def testRecursiveMatrixMultiply_twoByTwo_returnsCorrectResult(self):
+    m1 = matrix.Matrix.fromRows([[ 1,  2, -2,  0],
+                                 [-1,  0,  1,  1],
+                                 [-2, -1,  1, -1],
+                                 [-2, -1,  0, -1]])
+    m2 = matrix.Matrix.fromRows([[ 1, -2,  3,  0],
+                                 [-1,  0, -1, -1],
+                                 [ 2,  1,  0,  1],
+                                 [-2, -1,  1,  3]])
+
+    self.assertCorrectMatrixMultiply(m1, m2)
+
+  def testRecursiveMatrixMultiply_fourByFour_returnsCorrectResult(self):
+    m1 = matrix.Matrix.fromRows([[ 1,  2, -2,  0],
+                                 [-1,  0,  1,  1],
+                                 [-2, -1,  1, -1],
+                                 [-2, -1,  0, -1]])
+    m2 = matrix.Matrix.fromRows([[ 1, -2,  3,  0],
+                                 [-1,  0, -1, -1],
+                                 [ 2,  1,  0,  1],
+                                 [-2, -1,  1,  3]])
+
+    self.assertCorrectMatrixMultiply(m1, m2)
+
+
+  def testRecursiveMatrixMultiply_eightByEight_returnsCorrectResult(self):
+    m1 = matrix.Matrix.fromRows([[ 1,  2, -2,  0,  1,  1,  0, -2],
+                                 [-1,  0,  1,  1,  1, -2,  1,  1],
+                                 [-2, -1,  1, -1, -1,  2, -1,  1],
+                                 [-2, -1,  0, -1, -1, -1, -1,  1],
+                                 [ 0,  0,  1, -2, -1,  0, -1,  0],
+                                 [ 0, -2, -1, -1, -1,  0, -2,  0],
+                                 [ 1,  1, -1,  2,  0,  0, -1,  0],
+                                 [-2,  1, -1,  0, -1,  0,  1,  0]])
+    m2 = matrix.Matrix.fromRows([[ 1, -2,  3,  0,  0, -5,  3, -2],
+                                 [-1,  0, -1, -1, -1,  2,  0,  0],
+                                 [ 2,  1,  0,  1,  1, -2,  1,  0],
+                                 [-2, -1,  1,  3,  1, -1, -1,  0],
+                                 [ 0,  1, -1,  0,  1,  0,  1,  0],
+                                 [ 1, -2,  1,  1, -1,  0, -2,  0],
+                                 [-1, -1, -1,  2,  0, -1,  1,  1],
+                                 [ 2,  0,  1,  1,  1,  0,  1,  0]])
+
+    self.assertCorrectMatrixMultiply(m1, m2)
+
+  def assertCorrectMatrixMultiply(self, m1, m2):
+    self.assertEqual((m1*m2).matrix_,
+                     m1.getEquivalentNumpyMatrix().dot(m2.getEquivalentNumpyMatrix()).tolist())
 
 
 if __name__ == '__main__':
